@@ -1,0 +1,1 @@
+{"version":3,"file":"svg.js","sourceRoot":"","sources":["../../../../src/node/svg.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,eAAe,CAAC;AAIrC,MAAM,OAAO,GAAI,SAAQ,IAAI;IAE3B,YAAY,IAAU,EAAE,OAAoB;QAC1C,KAAK,CAAC,IAAI,EAAE,OAAO,CAAC,CAAC;IACvB,CAAC;IAEM,QAAQ;QACb,OAAO,IAAI,CAAC,SAAS,CAAC;IACxB,CAAC;CAEF"}

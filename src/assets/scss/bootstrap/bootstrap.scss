@@ -1,0 +1,25 @@
+// Sink file importing everything we use from Bootstrap and our customizations
+// our Bootstrap config overrides
+
+@import 'variables';
+// dependencies shared by various Bootstrap modules
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/utilities/api';
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/containers';
+
+@import 'bootstrap/scss/grid';
+// without this grid does not work properly (taken from Bootstrap Reboot, all other rules in that module interfere with Material)
+*, *::before, *::after {
+  box-sizing: border-box;
+
+}
+
+// disable a few Bootstrap rules interfering with Material
+@import 'reset';
+

@@ -1,0 +1,12 @@
+{
+  "name": "sgsi-qr-bill",
+  "version": "0.0.0",
+  "description": "",
+  "main": "main.js",
+  "author": "Andrea Casarella <andreacasarella@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "sqlite3": "^5.1.4",
+    "swissqrbill": "^3.2.1"
+  }
+}

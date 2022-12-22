@@ -9,7 +9,7 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-@import "src/assets/scss/colors";
+@import "colors";
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -27,16 +27,3 @@ $sgsi-qr-bill-theme: mat.define-light-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($sgsi-qr-bill-theme);
-
-
-/* You can add global styles to this file, and also import other style files */
-@import 'assets/scss/bootstrap/bootstrap';
-
-html, body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}

@@ -1,0 +1,5 @@
+@use '@angular/material' as mat;
+
+$sgsi-qr-bill-primary: mat.define-palette(mat.$blue-palette);
+$sgsi-qr-bill-accent: mat.define-palette(mat.$green-palette);
+$sgsi-qr-bill-warn: mat.define-palette(mat.$red-palette);

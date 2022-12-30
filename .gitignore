@@ -50,3 +50,6 @@ firebase.json
 
 # DB
 test.db
+
+#electron app
+/app/node_modules/

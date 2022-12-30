@@ -84,6 +84,8 @@
   - language
   - creditorId
   - debtorId
+  - status
+  - parentInvoiceId
   - createdAt
   - updatedAt
 

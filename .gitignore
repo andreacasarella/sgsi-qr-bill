@@ -52,4 +52,4 @@ firebase.json
 test.db
 
 #electron app
-/app/node_modules/
+/app/node_modules

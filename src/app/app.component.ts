@@ -7,13 +7,9 @@ import {ElectronService} from "./services";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'sgsi-qr-bill';
-
   constructor(
-    // private backend: BackendService,
     private electronService: ElectronService,
   ) {
-
     if (electronService.isElectron) {
       console.log(process.env);
       console.log('Run in electron');
@@ -22,14 +18,6 @@ export class AppComponent {
     } else {
       console.log('Run in browser');
     }
-
-    /*const backendReady$ = this.backend.ready().pipe(
-      filter(p => !!p),
-      tap( () => alert('ready')),
-      shareReplay(1)
-    );
-
-    backendReady$.subscribe();*/
   }
 
 }

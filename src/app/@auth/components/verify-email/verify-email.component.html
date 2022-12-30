@@ -1,0 +1,22 @@
+<div class="d-flex flex-column h-100 justify-content-center align-items-center">
+  <div class="d-flex flex-column justify-content-center align-items-center text-center mb-5">
+    <img src="assets/icons/swiss-qr-bill.svg" width="120px">
+  </div>
+  <mat-card class="mb-3">
+    <mat-card-header>
+      <mat-card-title>{{ 'components.verifyEmail.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
+    <mat-card-content *ngIf="user" class="d-flex flex-column gap-3">
+      <p>{{ 'components.verifyEmail.labels.description' | translate : {email: user.email} }}</p>
+      <button (click)="sendEmailVerification()"
+              color="primary"
+              mat-raised-button
+              type="button">
+        {{ 'components.verifyEmail.labels.sendEmailVerification' | translate }}
+      </button>
+      <button (click)="backToLogin()" color="primary" mat-button
+              type="button">{{ 'actions.backToLogin' | translate }}</button>
+    </mat-card-content>
+  </mat-card>
+</div>

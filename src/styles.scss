@@ -13,13 +13,15 @@
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
+$sgsi-typography: mat.define-typography-config();
+
 $sgsi-qr-bill-theme: mat.define-light-theme((
   color: (
     primary: $sgsi-qr-bill-primary,
     accent: $sgsi-qr-bill-accent,
     warn: $sgsi-qr-bill-warn,
   ),
-  typography: mat.define-typography-config(),
+  typography: $sgsi-typography,
   density: 0,
 ));
 
@@ -39,4 +41,72 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* SearchBar */
+app-search-bar {
+  display: flex;
+  flex-direction: column;
+  min-width: 450px;
+
+  .mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
+    @include mat.typography-level($sgsi-typography, 'body-2');
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mdc-text-field--outlined {
+    height: 36px;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 36px;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 6px 0;
+  }
+
+  .mat-mdc-form-field-icon-prefix > .mat-icon, .mat-mdc-form-field-icon-suffix > .mat-icon {
+    padding: 6px;
+  }
+}
+
+/* Header profile button */
+.header-user-button {
+  .mdc-button__label {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+/* SnackBar */
+.snack-bar-error {
+  > div:nth-of-type(1) {
+    background-color: mat.get-color-from-palette($sgsi-qr-bill-warn, 500) !important;
+    padding-left: 8px;
+  }
+}
+
+/* Main */
+main {
+  padding: 16px;
+}
+
+/* Description list */
+dl, dt, dd {
+  margin: 0;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-gap: 0.5rem 1.5rem;
 }

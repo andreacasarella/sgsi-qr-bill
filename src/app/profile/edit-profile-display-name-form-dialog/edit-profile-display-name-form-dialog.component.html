@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>{{ "Aggiorna immagine profilo" | translate}}</h2>
+<ng-container *ngIf="userService.$user | async as user">
+  <form (ngSubmit)="submit(user)" *ngIf="form" [formGroup]="form">
+    <div mat-dialog-content class="mat-typography d-flex flex-column">
+      <mat-form-field>
+        <mat-label>{{ 'labels.displayName' | translate }}</mat-label>
+        <input formControlName="displayName"
+               matInput
+               type="email"
+               autofocus>
+        <mat-error *ngIf="displayNameControl?.errors">{{ displayNameControl?.errors | errorsPhrase }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end" class="border-top">
+      <button (click)="close()" mat-button
+              type="button">{{ 'actions.cancel' | translate }}</button>
+      <button [disabled]="form.invalid" [color]="'primary'" mat-button
+              type="submit">{{ 'actions.confirm' | translate }}</button>
+    </div>
+  </form>
+</ng-container>

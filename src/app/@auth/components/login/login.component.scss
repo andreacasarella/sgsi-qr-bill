@@ -1,0 +1,14 @@
+:host {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  background: rgb(167, 29, 49);
+  background: linear-gradient(240deg, rgba(167, 29, 49, 1) 0%, rgba(63, 13, 18, 1) 100%);
+
+  mat-card {
+    width: 400px;
+  }
+}
+

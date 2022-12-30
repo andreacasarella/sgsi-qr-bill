@@ -1,0 +1,16 @@
+:host {
+  /*position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;*/
+
+  mat-toolbar {
+    background-color: #fafafa;
+  }
+
+  .mat-divider {
+    margin-left: 16px;
+    width: calc(100% - 32px);
+  }
+}

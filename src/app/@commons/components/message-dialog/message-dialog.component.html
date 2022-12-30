@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ data.titleKey | translate}}</h2>
+<div mat-dialog-content class="mat-typography">
+  <p [innerHTML]="data.messageKey | translate"></p>
+</div>
+<div mat-dialog-actions align="end" class="border-top">
+  <button (click)="close()" mat-button
+          type="button">{{ (data.confirm ? 'actions.cancel' : 'actions.ok') | translate }}</button>
+  <button (click)="confirm()" *ngIf="data.confirm" [color]="data.actionColor || 'primary'" mat-button
+          type="button" cdkFocusInitial>{{ (data.actionLabelKey || 'actions.confirm') | translate }}</button>
+</div>

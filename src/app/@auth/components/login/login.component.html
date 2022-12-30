@@ -1,0 +1,42 @@
+<div class="d-flex flex-column h-100 justify-content-center align-items-center">
+  <div class="d-flex flex-column justify-content-center align-items-center text-center mb-5">
+    <img src="assets/icons/swiss-qr-bill.svg" width="120px">
+  </div>
+  <mat-card class="mb-3">
+    <mat-card-header>
+      <mat-card-title>{{ 'components.login.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
+    <mat-card-content>
+      <form (ngSubmit)="login()" [formGroup]="form" class="d-flex flex-column gap-3">
+        <mat-form-field>
+          <mat-label>{{ 'labels.email' | translate }}</mat-label>
+          <input autocomplete="username"
+                 formControlName="email"
+                 matInput
+                 type="email"
+                 autofocus>
+          <mat-error *ngIf="emailControl?.errors">{{ emailControl?.errors | errorsPhrase }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.password' | translate }}</mat-label>
+          <input autocomplete="current-password"
+                 formControlName="password"
+                 matInput
+                 type="password">
+          <mat-error *ngIf="passwordControl?.errors">{{ passwordControl?.errors | errorsPhrase }}</mat-error>
+        </mat-form-field>
+
+        <button [disabled]="form.invalid"
+                color="primary"
+                mat-raised-button
+                type="submit">{{'actions.login' | translate}}
+        </button>
+
+        <a color="primary" mat-button
+           routerLink="/auth/forgot-password">{{ 'components.login.labels.forgottenPassword' | translate}}</a>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -10,13 +10,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     - [ ] Wizard
 - [ ] Angular deps
   - [X] Material
+  - [ ] Bootstrap
   - [ ] Luxon
   - [ ] Google phone lib
 - [ ] I18n
   - [X] ngx-translate
   - [ ] it, de, fr, en
 - [ ] Firebase (Optional)
-  - [ ] Setup
+  - [X] Setup
   - [ ] Auth
     -  [ ] Login
     -  [ ] Reset password

@@ -1,0 +1,10 @@
+<ng-container *ngIf="user">
+  <div class="flex-grow-1 rounded-circle border text-center">
+    <ng-container *ngIf="user.photoURL; else initials">
+      <span><img [src]="user.photoURL"></span>
+    </ng-container>
+    <ng-template #initials>
+      <span>{{getUserInitials()}}</span>
+    </ng-template>
+  </div>
+</ng-container>

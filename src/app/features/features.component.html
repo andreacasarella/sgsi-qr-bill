@@ -1,0 +1,22 @@
+<mat-sidenav-container
+  (backdropClick)="sidenav.toggle()"
+  autosize
+  class="d-flex flex-column flex-grow-1 flex-shrink-0">
+  <mat-sidenav
+    #sidenav
+    [disableClose]="true"
+    [fixedInViewport]="true"
+    [mode]="sidenavOverMode"
+    [opened]="!isSmallScreen"
+    class="sidenav"
+    opened>
+    <app-navigation></app-navigation>
+  </mat-sidenav>
+  <mat-sidenav-content class="d-flex flex-column flex-grow-1 flex-shrink-0">
+    <app-header (toggle)="sidenav.toggle()"></app-header>
+    <main class="flex-grow-1">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

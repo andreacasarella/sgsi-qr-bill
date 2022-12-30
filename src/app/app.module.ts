@@ -8,10 +8,13 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {registerLocaleData} from "@angular/common";
-import {i18nAppInitializer} from "./i18n/i18n-app-initializer";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {i18nAppInitializer} from "./@core/i18n/i18n-app-initializer";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {getFirestore, provideFirestore} from '@angular/fire/firestore';
+import {environment} from "../environment/environment";
+import {getAuth, provideAuth} from "@angular/fire/auth";
+import {getStorage, provideStorage} from "@angular/fire/storage";
 
 
 // AoT requires an exported function for factories
@@ -27,8 +30,8 @@ registerLocaleData(localeItCH);
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       defaultLanguage: 'it',
@@ -38,9 +41,10 @@ registerLocaleData(localeItCH);
         deps: [HttpClient]
       }
     }),
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule
+    provideAuth(() => getAuth()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'it-CH'},
@@ -50,6 +54,7 @@ registerLocaleData(localeItCH);
       deps: [Injector],
       multi: true
     },
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ],
   bootstrap: [AppComponent]
 })

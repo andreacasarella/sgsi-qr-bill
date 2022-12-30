@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+
+$sgsi-typography: mat.define-typography-config();
+
+:host {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+
+  div:first-child {
+    overflow: hidden;
+    line-height: 28px !important;
+    background-color: #ffffff;
+    @include mat.typography-level($sgsi-typography, 'caption');
+
+    img {
+      width: 100%
+    }
+  }
+
+  &.xl {
+    width: 120px;
+    height: 120px;
+
+    div:first-child {
+      line-height: 118px !important;
+      background-color: #ffffff;
+      @include mat.typography-level($sgsi-typography, 'headline-3');
+    }
+  }
+
+
+}

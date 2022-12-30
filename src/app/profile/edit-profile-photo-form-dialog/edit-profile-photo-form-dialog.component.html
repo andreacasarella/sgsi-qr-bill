@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>{{ "Aggiorna immagine profilo" | translate}}</h2>
+<div mat-dialog-content class="mat-typography d-flex flex-column" *ngIf="form" [formGroup]="form">
+  <ng-container *ngIf="!showCropper">
+    <button mat-stroked-button (click)="file.click()">
+      <mat-icon>add</mat-icon>
+      Carica foto
+    </button>
+    <input class="d-none" #file type="file" accept="image/*" (change)="fileChangeEvent($event)"/>
+  </ng-container>
+  <div>
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [containWithinAspectRatio]="containWithinAspectRatio"
+      [aspectRatio]="1/1"
+      [resizeToWidth]="120"
+      [cropperMinWidth]="128"
+      [cropperMinHeight]="128"
+      [onlyScaleDown]="true"
+      [roundCropper]="true"
+      [canvasRotation]="canvasRotation"
+      [transform]="transform"
+      [alignImage]="'center'"
+      [backgroundColor]="'white'"
+      [style.display]="showCropper ? null : 'none'"
+      format="jpeg"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady($event)"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+  </div>
+  <ng-container *ngIf="showCropper">
+    <div class="d-flex flex-row justify-content-center">
+      <button mat-icon-button [disabled]="form.get('zoom')?.value <= 1" (click)="zoomOut()">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <mat-slider
+        [max]="2"
+        [min]="1"
+        [step]="step"
+        class="flex-grow-1">
+        <input matSliderThumb formControlName="zoom">
+      </mat-slider>
+      <button mat-icon-button [disabled]="form.get('zoom')?.value >= 2" (click)="zoomIn()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+</div>
+<div mat-dialog-actions align="end" class="border-top">
+  <button (click)="close()" mat-button
+          type="button">{{ 'actions.cancel' | translate }}</button>
+  <ng-container *ngIf="userService.$user | async as user">
+    <button (click)="submit(user)" [disabled]="form?.invalid" [color]="'primary'" mat-button
+            type="button">{{ 'actions.confirm' | translate }}</button>
+  </ng-container>
+</div>
+

@@ -1,1 +1,113 @@
-{}
+{
+  "components": {
+    "login": {
+      "title": "Accedi",
+      "labels": {
+        "forgottenPassword": "Password dimenticata?"
+      }
+    },
+    "forgotPassword": {
+      "title": "Reimposta la password",
+      "labels": {
+        "description": "Inserisci il tuo indirizzo email per richiedere la reimpostazione della password."
+      }
+    },
+    "verifyEmail": {
+      "title": "Indirizzo email non verificato",
+      "labels": {
+        "description": "Per poter effettuare qualsiasi operazione è necessario verificare l'indirizzo email {{email}}.",
+        "sendEmailVerification": "Invia l'email di verifica"
+      }
+    }
+  },
+  "dialogs": {
+    "logout": {
+      "title": "Vuoi uscire?",
+      "message": "Se vuoi interrompere la tua sessione di lavoro clicca su \"Esci\"."
+    }
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "actions": {
+    "submit": "Invia",
+    "edit": "Modifica",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "login": "Accedi",
+    "logout": "Esci",
+    "save": "Salva",
+    "search": "Cerca",
+    "next": "Avanti",
+    "prev": "Indietro",
+    "close": "Chiudi",
+    "reset": "Reset",
+    "confirm": "Conferma",
+    "backToLogin": "Torna alla pagina di login"
+  },
+  "errors": {
+    "required": "campo obbligatorio",
+    "email": "indirizzo email non valido"
+  },
+  "firebase": {
+    "errors": {
+      "auth/claims-too-large": "Il payload delle attestazioni fornito a setCustomUserClaims() supera la dimensione massima consentita di 1000 byte.",
+      "auth/email-already-exists": "L'e-mail fornita è già utilizzata da un utente esistente. Ogni utente deve avere un'e-mail univoca.",
+      "auth/id-token-expired": "Il token ID Firebase fornito è scaduto.",
+      "auth/id-token-revoked": "Il token ID Firebase è stato revocato.",
+      "auth/insufficient-permission": "La credenziale utilizzata per inizializzare l'Admin SDK non dispone di autorizzazioni sufficienti per accedere alla risorsa di autenticazione richiesta.",
+      "auth/internal-error": "Il server di autenticazione ha riscontrato un errore imprevisto durante il tentativo di elaborare la richiesta.",
+      "auth/invalid-argument": "È stato fornito un argomento non valido a un metodo di autenticazione.",
+      "auth/invalid-claims": "Gli attributi di attestazione personalizzati forniti a setCustomUserClaims() non sono validi.",
+      "auth/invalid-continue-uri": "L'URL continua deve essere una stringa URL valida.",
+      "auth/invalid-creation-time": "L'ora di creazione deve essere una stringa di data UTC valida.",
+      "auth/invalid-credential": "La credenziale utilizzata per autenticare gli Admin SDK non può essere utilizzata per eseguire l'azione desiderata.",
+      "auth/invalid-disabled-field": "Il valore fornito per la proprietà dell'utente disabled non è valido. Deve essere un booleano.",
+      "auth/invalid-display-name": "Il valore fornito per la proprietà utente displayName non è valido. Deve essere una stringa non vuota.",
+      "auth/invalid-dynamic-link-domain": "Il dominio di collegamento dinamico fornito non è configurato o autorizzato per il progetto corrente.",
+      "auth/invalid-email": "Il valore fornito per la proprietà dell'utente di email non è valido. Deve essere un indirizzo email stringa.",
+      "auth/invalid-email-verified": "Il valore fornito per la proprietà utente emailVerified non è valido. Deve essere un booleano.",
+      "auth/invalid-hash-algorithm": "L'algoritmo hash deve corrispondere a una delle stringhe nell'elenco degli algoritmi supportati.",
+      "auth/invalid-hash-block-size": "La dimensione del blocco hash deve essere un numero valido.",
+      "auth/invalid-hash-derived-key-length": "La lunghezza della chiave derivata dall'hash deve essere un numero valido.",
+      "auth/invalid-hash-key": "La chiave hash deve essere un buffer di byte valido.",
+      "auth/invalid-hash-memory-cost": "Il costo della memoria hash deve essere un numero valido.",
+      "auth/invalid-hash-parallelization": "La parallelizzazione hash deve essere un numero valido.",
+      "auth/invalid-hash-rounds": "Gli hash round devono essere un numero valido.",
+      "auth/invalid-hash-salt-separator": "Il campo del separatore di sale dell'algoritmo di hash deve essere un buffer di byte valido.",
+      "auth/invalid-id-token": "Il token ID fornito non e un token ID Firebase valido.",
+      "auth/invalid-last-sign-in-time": "L'ora dell'ultimo accesso deve essere una stringa di data UTC valida.",
+      "auth/invalid-page-token": "Il token della pagina successiva fornito in listUsers() non e valido. Deve essere una stringa valida non vuota.",
+      "auth/invalid-password": "Il valore fornito per la proprieta dell'utente password non e valido. Deve essere una stringa con almeno sei caratteri.",
+      "auth/invalid-password-hash": "L'hash della password deve essere un buffer di byte valido.",
+      "auth/invalid-password-salt": "La password salt deve essere un buffer di byte valido",
+      "auth/invalid-phone-number": "Il valore fornito per il numero di phoneNumber non e valido. Deve essere una stringa identificativa conforme allo standard E.164 non vuota.",
+      "auth/invalid-photo-url": "Il valore fornito per la proprieta utente photoURL non e valido. Deve essere una stringa URL.",
+      "auth/invalid-profile-attribute": "Il valore fornito per la proprieta utente photoURL non e valido. Deve essere una stringa URL.",
+      "auth/invalid-provider-data": "providerData deve essere una matrice valida di oggetti UserInfo.",
+      "auth/invalid-provider-id": "Il providerId deve essere una stringa identificativa del provider supportata valida.",
+      "auth/invalid-oauth-responsetype": "Solo esattamente un responseType OAuth deve essere impostato su true.",
+      "auth/invalid-session-cookie-duration": "La durata del cookie di sessione deve essere un numero valido in millisecondi compreso tra 5 minuti e 2 settimane.",
+      "auth/invalid-uid": "L' uid fornito deve essere una stringa non vuota con un massimo di 128 caratteri.",
+      "auth/invalid-user-import": "Il record utente da importare non e valido.",
+      "auth/maximum-user-count-exceeded": "E stato superato il numero massimo consentito di utenti da importare.",
+      "auth/missing-android-pkg-name": "E necessario fornire un nome pacchetto Android se e necessario installare l'app Android.",
+      "auth/missing-continue-uri": "Nella richiesta deve essere fornito un URL continuo valido.",
+      "auth/missing-hash-algorithm": "L'importazione di utenti con hash delle password richiede la fornitura dell'algoritmo di hash e dei relativi parametri.",
+      "auth/missing-ios-bundle-id": "Nella richiesta manca un ID bundle.",
+      "auth/missing-uid": "Un identificatore uid e richiesto per l'operazione corrente.",
+      "auth/missing-oauth-client-secret": "Il segreto del client di configurazione OAuth e necessario per abilitare il flusso di codice OIDC.",
+      "auth/operation-not-allowed": "Il provider di accesso fornito e disabilitato per il tuo progetto Firebase.",
+      "auth/phone-number-already-exists": "Il numero di phoneNumber fornito e gia utilizzato da un utente esistente. Ogni utente deve avere un numero di phoneNumber.",
+      "auth/project-not-found": "Non e stato trovato alcun progetto Firebase per le credenziali utilizzate per inizializzare gli Admin SDK.",
+      "auth/reserved-claims": "Una o piu attestazioni utente personalizzate fornite a setCustomUserClaims() sono riservate.",
+      "auth/session-cookie-expired": "Il cookie di sessione Firebase fornito e scaduto.",
+      "auth/session-cookie-revoked": "Il cookie di sessione Firebase e stato revocato.",
+      "auth/uid-already-exists": "L' uid fornito e gia utilizzato da un utente esistente. Ogni utente deve avere un uid univoco.",
+      "auth/unauthorized-continue-uri": "Il dominio dell'URL continua non e autorizzato. Inserisci nella whitelist il dominio nella console di Firebase.",
+      "auth/user-not-found": "Non esiste alcun record utente esistente corrispondente all'identificatore fornito.",
+      "auth/wrong-password": "Password errata, riprovare."
+    }
+  }
+}

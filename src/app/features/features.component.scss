@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  mat-sidenav {
+    background: rgb(167, 29, 49);
+    background: linear-gradient(240deg, rgba(167, 29, 49, 1) 0%, rgba(63, 13, 18, 1) 100%);
+    width: 250px;
+    border: none;
+    //border-right: 1px solid lightgray;
+  }
+}

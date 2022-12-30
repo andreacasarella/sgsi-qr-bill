@@ -1,0 +1,31 @@
+<div class="d-flex flex-column mt-3 mb-3 ps-3">
+  <img src="assets/icons/swiss-qr-bill.svg" width="45px">
+</div>
+<mat-nav-list class="pt-2">
+
+  <a #dashboardLink="routerLinkActive"
+     [routerLink]="['/dashboard']"
+     mat-list-item
+     routerLinkActive="active">
+    <mat-icon [fontSet]="dashboardLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>dashboard</mat-icon>
+    <span matListItemTitle>Dashboard</span>
+  </a>
+
+  <a #addressesLink="routerLinkActive"
+     [routerLink]="['/addresses']"
+     mat-list-item
+     routerLinkActive="active">
+    <mat-icon [fontSet]="addressesLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>contact_mail
+    </mat-icon>
+    <span matListItemTitle>Indirizzi</span>
+  </a>
+
+  <a #invoicesLink="routerLinkActive"
+     [routerLink]="['/invoices']"
+     mat-list-item
+     routerLinkActive="active">
+    <mat-icon [fontSet]="invoicesLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>receipt</mat-icon>
+    <span matListItemTitle>Fatture</span>
+  </a>
+
+</mat-nav-list>

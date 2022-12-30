@@ -1,0 +1,94 @@
+- clients:
+  - title
+  - firstName
+  - lastName
+  - addressId
+  - email
+  - phoneNumber
+  - linkIds
+  - createdAt
+  - updatedAt
+
+- socials
+  - name
+  - url
+
+- addresses:
+  - street
+  - civicNumber
+  - zip
+  - city
+  - country
+
+- organizations
+  - title
+  - name
+  - email
+  - website
+  - logoUrl
+  - ibanAccount
+  - linkIds
+  - addressId
+  - createdAt
+  - updatedAt
+
+- invoiceCreditors
+  - organizationId
+  - title
+  - name
+  - email
+  - website
+  - logoUrl
+  - ibanAccount
+  - invoiceCreditorAddressId
+  - createdAt
+  - updatedAt
+
+- invoiceCreditorAddresses
+  - street
+  - civicNumber
+  - zip
+  - city
+  - country
+  - createdAt
+  - updatedAt
+
+- invoiceDebtors
+  - clientId
+  - title
+  - firstName
+  - lastName
+  - email
+  - invoiceDebtorAddressId
+  - createdAt
+  - updatedAt
+
+- invoiceDebtorAddresses
+  - street
+  - civicNumber
+  - zip
+  - city
+  - country
+  - createdAt
+  - updatedAt
+
+- invoices
+  - title
+  - salutation
+  - content
+  - signatureIds
+  - amount
+  - message
+  - reference
+  - currency
+  - language
+  - creditorId
+  - debtorId
+  - createdAt
+  - updatedAt
+
+- signatures
+  - position
+  - firstName
+  - lastName
+  - imageUrl

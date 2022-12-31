@@ -10,6 +10,13 @@ let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
+const fp = require("find-free-port")
+fp(3000).then((freePort: any) => {
+  console.log('found ' + freePort);
+}).catch((err: any) => {
+  console.error(err);
+});
+
 function createWindow(): BrowserWindow {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
@@ -85,6 +92,16 @@ try {
   // Catch Error
   // throw e;
 }
+
+ipcMain.on('init-rest-api', (event, arg) => {
+  fp(30000000000).then((freePort: number[]) => {
+    console.log('found free port' + freePort[0]);
+    event.sender.send('init-rest-api', freePort[0])
+  }).catch((err: any) => {
+    console.error(err);
+    event.sender.send('init-rest-api-error', err)
+  });
+});
 
 ipcMain.on('ready', (event, arg) => {
 

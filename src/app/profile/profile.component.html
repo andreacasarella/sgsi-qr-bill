@@ -27,7 +27,7 @@
           <ng-template #emptyDisplayName>
             <button mat-stroked-button color="primary" (click)="editProfileDisplayName(user)" class="mb-2">
               <mat-icon>edit</mat-icon>
-              Aggiungi nome
+              Aggiungi nome utente
             </button>
           </ng-template>
           <h3 mat-card-subtitle>{{user.email}}</h3>
@@ -38,7 +38,7 @@
               <dd>{{user.phoneNumber}}</dd>
             </ng-container>
             <dt>Ultimo login:</dt>
-            <dd>{{ user.metadata.lastSignInTime | date }}</dd>
+            <dd>{{ user.metadata.lastSignInTime | date: 'medium' }}</dd>
           </dl>
         </div>
       </mat-card-content>

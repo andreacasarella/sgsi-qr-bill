@@ -17,6 +17,12 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('test.db');
 let win = null;
 const args = process.argv.slice(1), serve = args.some(val => val === '--serve');
+const fp = require("find-free-port");
+fp(3000).then((freePort) => {
+    console.log('found ' + freePort);
+}).catch((err) => {
+    console.error(err);
+});
 function createWindow() {
     const size = electron_1.screen.getPrimaryDisplay().workAreaSize;
     // Create the browser window.
@@ -82,6 +88,15 @@ catch (e) {
     // Catch Error
     // throw e;
 }
+electron_1.ipcMain.on('init-rest-api', (event, arg) => {
+    fp(30000000000).then((freePort) => {
+        console.log('found free port' + freePort[0]);
+        event.sender.send('init-rest-api', freePort[0]);
+    }).catch((err) => {
+        console.error(err);
+        event.sender.send('init-rest-api-error', err);
+    });
+});
 electron_1.ipcMain.on('ready', (event, arg) => {
     db.serialize(() => {
         db.run("CREATE TABLE lorem (info TEXT)");

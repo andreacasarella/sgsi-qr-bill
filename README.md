@@ -10,19 +10,21 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     - [ ] Wizard
 - [ ] Angular deps
   - [X] Material
-  - [ ] Bootstrap
-  - [ ] Luxon
+  - [X] Bootstrap
+  - [X] Luxon
   - [ ] Google phone lib
 - [ ] I18n
   - [X] ngx-translate
   - [ ] it, de, fr, en
-- [ ] Firebase (Optional)
+- [ ] Firebase
   - [X] Setup
-  - [ ] Auth
-    -  [ ] Login
-    -  [ ] Reset password
-    -  [ ] Confirm email
-  - [ ] Store file db
+  - [X] Auth
+    -  [X] Login
+    -  [X] Reset password
+    -  [X] Confirm email
+  - [ ] Storage
+    - [X] Profile image
+    - [ ] DB
 - [ ] Electron
   - [ ] Setup
   - [ ] Release
@@ -46,11 +48,58 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - [ ] Preview
   - [ ] Send by email
   - [ ] Print
+- [X] Profile
+  - [X] Edit displayName
+  - [X] Edit photoURL
+  - [X] ngx-image-cropper
 
-## Development server
+## Web Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you
+Run `npm run ng:serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload
+if you
 change any of the source files.
+
+## Electron Development with live reload
+
+Run `npm run start` for a dev electron app. App also available as ng:serve but no access to electron features.
+
+## Firebase integration
+
+### Configurations
+
+Create a file firebase.ts with firebase configuration generate by creating a new project in src/environment folder.
+
+    export const firebaseConfig = {
+      apiKey: <YOUR_API_KEY>,
+      authDomain: "<YOUR_AUTH_DOMAIN>,
+      projectId: <YOUR_PROJECT_ID>,
+      storageBucket: <YOUR_STORAGE_BUCKET>,
+      messagingSenderId: <YOUR_MESSAGING_SENDER_ID>,
+      appId: <YOUR_APP_ID>
+    };
+
+### Authentication
+
+- Enable Email/password provider in Project > Authentication > Sign-in method;
+- Add a user with email and password;
+- Logged user must validate email.
+
+### Storage rules
+
+    rules_version = '2';
+    service firebase.storage {
+      match /b/{bucket}/o {
+      
+          function signedIn() {
+            return request.auth.uid != null
+          }
+          
+          match /users/{document=**} {
+            allow read, write: if signedIn() && request.auth.token.email_verified;
+          }  
+      
+      }
+    }
 
 ## Code scaffolding
 

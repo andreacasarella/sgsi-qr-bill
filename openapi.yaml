@@ -1,0 +1,446 @@
+openapi: 3.0.0
+info:
+  title: Swiss Qr Bill
+  description: 'API to manage swiss qr bill'
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: andreacasarella@gmail.com
+  version: 1.0.0
+# externalDocs:
+#   description: Find out more about Swagger
+#   url: http://swagger.io
+servers:
+  - url: http://localhost:3000/
+    description: dev
+  - url: https://staging.to.be.defined/v2
+    description: staging
+  - url: https://prod.be.defined/v2
+    description: prod
+
+tags:
+  - name: statistics
+  - name: organizations
+  - name: clients
+  - name: invoices
+
+paths:
+  /organizations:
+    get:
+      tags:
+        - organizations
+      summary: get paginated list of organizations
+      parameters:
+        - $ref: '#/components/parameters/keywords'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        200:
+          description: OK
+          content:
+            applications/json:
+              schema:
+                type: object
+                properties:
+                  records:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Organization'
+                  page:
+                    type: integer
+                  perPage:
+                    type: integer
+                  total:
+                    type: integer
+                required:
+                  - records
+                  - page
+                  - perPage
+                  - total
+    post:
+      tags:
+        - organizations
+      summary: create an organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Generic error (e.g. invalid data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /organizations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - organizations
+      summary: get an organization
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        404:
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - organizations
+      summary: update an organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          description: Generic error (e.g. invalid data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - organizations
+      summary: delete an organization
+      responses:
+        204:
+          description: No Content
+        403:
+          description: 'Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /clients:
+    get:
+      tags:
+        - clients
+      summary: get paginated list of clients
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/keywords'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        200:
+          description: OK
+          content:
+            applications/json:
+              schema:
+                type: object
+                properties:
+                  records:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Client'
+                  page:
+                    type: integer
+                  perPage:
+                    type: integer
+                  total:
+                    type: integer
+                required:
+                  - records
+                  - page
+                  - perPage
+                  - total
+    post:
+      tags:
+        - clients
+      summary: create a client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Generic error (e.g. invalid data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /clients/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - clients
+      summary: get a client
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        404:
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - clients
+      summary: update a client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        400:
+          description: Generic error (e.g. invalid data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - clients
+      summary: delete a client
+      responses:
+        204:
+          description: No Content
+        403:
+          description: 'Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    organizationId:
+      name: organizationId
+      in: query
+      required: true
+      schema:
+        type: integer
+    keywords:
+      name: keywords
+      in: query
+      schema:
+        type: string
+    page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    perPage:
+      name: per-page
+      in: query
+      schema:
+        type: integer
+        default: 20
+        minimum: 10
+        maximum: 40
+
+  schemas:
+    Organization:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true
+            title:
+              type: string
+              maxLength: 16
+            name:
+              type: string
+              maxLength: 70
+            ibanAccount:
+              type: string
+              maxLength: 21
+              format: iban
+            address:
+              $ref: '#/components/schemas/Address'
+            email:
+              type: string
+              maxLength: 100
+              format: email
+            website:
+              type: string
+              maxLength: 255
+              format: url
+            logoUrl:
+              type: string
+              maxLength: 255
+              format: url
+          required:
+            - id
+            - title
+            - name
+            - ibanAccount
+            - address
+        - $ref: '#/components/schemas/TimeStamps'
+
+    Client:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true
+            organizationId:
+              type: integer
+            title:
+              type: string
+              maxLength: 16
+            firstName:
+              type: string
+              maxLength: 70
+            lastName:
+              type: string
+              maxLength: 70
+            address:
+              $ref: '#/components/schemas/Address'
+            email:
+              type: string
+              maxLength: 100
+              format: email
+            phoneNumber:
+              type: string
+              maxLength: 100
+              format: url
+            socials:
+              type: array
+              items:
+                $ref: '#/components/schemas/Social'
+          required:
+            - id
+            - organizationId
+            - title
+            - firstName
+            - lastName
+            - address
+        - $ref: '#/components/schemas/TimeStamps'
+
+
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+          maxLength: 70
+        buildingNumber:
+          type: string
+          maxLength: 16
+        zip:
+          type: string
+          maxLength: 16
+        country:
+          type: string
+          maxLength: 2
+          format: iso2
+      required:
+        - street
+        - buildingNumber
+        - zip
+        - country
+
+    Social:
+      type: object
+      properties:
+        label:
+          type: string
+          maxLength: 70
+        url:
+          type: string
+          maxLength: 255
+          format: url
+      required:
+        - label
+        - url
+
+    TimeStamps:
+      type: object
+      # description: timestamps common to all resources
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - createdAt
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - code
+        - message

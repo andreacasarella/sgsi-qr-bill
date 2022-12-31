@@ -6,8 +6,7 @@ import {base64ToFile, Dimensions, ImageCroppedEvent, ImageTransform} from "ngx-i
 import {AuthService} from "../../@auth/services/auth.service";
 import {AuthUserService} from "../../@auth/services/auth-user.service";
 import {getDownloadURL, ref, Storage, uploadString} from "@angular/fire/storage";
-import firebase from "firebase/compat";
-import {pairwise, tap} from "rxjs";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-edit-profile-photo-form-dialog',
@@ -31,7 +30,7 @@ export class EditProfilePhotoFormDialogComponent implements OnInit {
   canvasRotation = 0;
   rotation = 0;
   currentScale = 1;
-  step = .1;
+  step = 0.1;
   showCropper = false;
   containWithinAspectRatio = false;
   transform: ImageTransform = {};
@@ -49,13 +48,12 @@ export class EditProfilePhotoFormDialogComponent implements OnInit {
     });
 
     this.form.get('zoom')?.valueChanges.pipe(
-      pairwise(),
-      tap(([prev, next]) => {
+      tap((next) => {
         this.setScale(next);
       })
     ).subscribe();
 
-    this.form?.get('zoom')?.setValue(1);
+    // this.form?.get('zoom')?.setValue(0);
   }
 
   /*ngAfterViewInit(): void {

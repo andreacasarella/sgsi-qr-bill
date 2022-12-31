@@ -36,6 +36,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "bootstrap": "^5.2.3",
+    "find-free-port": "^2.0.0",
     "firebase": "^9.15.0",
     "luxon": "^3.1.1",
     "ngx-image-cropper": "^6.3.2",

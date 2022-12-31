@@ -6,6 +6,7 @@
   "author": "Andrea Casarella <andreacasarella@gmail.com>",
   "private": true,
   "dependencies": {
+    "find-free-port": "^2.0.0",
     "sqlite3": "^5.1.4",
     "swissqrbill": "^3.2.1"
   }

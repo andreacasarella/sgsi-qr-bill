@@ -5,7 +5,7 @@
       <mat-icon>add</mat-icon>
       Carica foto
     </button>
-    <input class="d-none" #file type="file" accept="image/*" (change)="fileChangeEvent($event)"/>
+    <input class="d-none" #file type="file" accept="image/png, image/jpeg" (change)="fileChangeEvent($event)"/>
   </ng-container>
   <div>
     <image-cropper
@@ -28,21 +28,23 @@
       (imageLoaded)="imageLoaded()"
       (cropperReady)="cropperReady($event)"
       (loadImageFailed)="loadImageFailed()"
+      [allowMoveImage]="false"
+      [hideResizeSquares]="false"
     ></image-cropper>
   </div>
   <ng-container *ngIf="showCropper">
     <div class="d-flex flex-row justify-content-center">
-      <button mat-icon-button [disabled]="form.get('zoom')?.value <= 1" (click)="zoomOut()">
+      <button mat-icon-button [disabled]="form.get('zoom')?.value < 0.2" (click)="zoomOut()">
         <mat-icon>remove</mat-icon>
       </button>
       <mat-slider
-        [max]="2"
-        [min]="1"
+        [max]="1.9"
+        [min]="0.1"
         [step]="step"
         class="flex-grow-1">
         <input matSliderThumb formControlName="zoom">
       </mat-slider>
-      <button mat-icon-button [disabled]="form.get('zoom')?.value >= 2" (click)="zoomIn()">
+      <button mat-icon-button [disabled]="form.get('zoom')?.value > 1.8" (click)="zoomIn()">
         <mat-icon>add</mat-icon>
       </button>
     </div>

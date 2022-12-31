@@ -1,26 +1,31 @@
 - clients:
+  - id
+  - organizationId
   - title
   - firstName
   - lastName
   - addressId
   - email
   - phoneNumber
-  - linkIds
+  - socialIds
   - createdAt
   - updatedAt
 
 - socials
-  - name
+  - id
+  - label
   - url
 
 - addresses:
+  - id
   - street
-  - civicNumber
+  - buildingNumber
   - zip
   - city
   - country
 
 - organizations
+  - id
   - title
   - name
   - email
@@ -33,6 +38,7 @@
   - updatedAt
 
 - invoiceCreditors
+  - id
   - organizationId
   - title
   - name
@@ -45,6 +51,7 @@
   - updatedAt
 
 - invoiceCreditorAddresses
+  - id
   - street
   - civicNumber
   - zip
@@ -54,6 +61,7 @@
   - updatedAt
 
 - invoiceDebtors
+  - id
   - clientId
   - title
   - firstName
@@ -64,6 +72,7 @@
   - updatedAt
 
 - invoiceDebtorAddresses
+  - id
   - street
   - civicNumber
   - zip
@@ -73,6 +82,7 @@
   - updatedAt
 
 - invoices
+  - id
   - title
   - salutation
   - content
@@ -90,6 +100,7 @@
   - updatedAt
 
 - signatures
+  - id
   - position
   - firstName
   - lastName

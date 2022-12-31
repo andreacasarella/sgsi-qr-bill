@@ -27,6 +27,7 @@
     }
   },
   "labels": {
+    "displayName": "Nome utente",
     "email": "Email",
     "password": "Password"
   },

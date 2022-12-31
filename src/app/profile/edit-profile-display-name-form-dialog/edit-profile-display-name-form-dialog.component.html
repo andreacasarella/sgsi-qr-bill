@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ "Aggiorna immagine profilo" | translate}}</h2>
+<h2 mat-dialog-title>{{ "Aggiorna nome utente" | translate}}</h2>
 <ng-container *ngIf="userService.$user | async as user">
   <form (ngSubmit)="submit(user)" *ngIf="form" [formGroup]="form">
     <div mat-dialog-content class="mat-typography d-flex flex-column">

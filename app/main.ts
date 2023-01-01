@@ -1,10 +1,10 @@
 import {app, BrowserWindow, ipcMain, screen} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import {DatabaseManager} from './DatabaseManager';
 
 const SwissQRBill = require("swissqrbill");
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('test.db');
+const dbManager = new DatabaseManager("test.db");
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -103,28 +103,14 @@ ipcMain.on('init-rest-api', (event, arg) => {
   });
 });
 
-ipcMain.on('ready', (event, arg) => {
+ipcMain.on('ready', async (event, arg) => {
 
-
-  db.serialize(() => {
-    db.run("CREATE TABLE lorem (info TEXT)");
-
-    const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-    for (let i = 0; i < 10; i++) {
-      stmt.run("Ipsum " + i);
-    }
-    stmt.finalize();
-
-    db.each("SELECT rowid AS id, info FROM lorem", (err: any, row: { id: string; info: string; }) => {
-      console.log(row.id + ": " + row.info);
-    });
-  });
-
-  db.close();
+  await dbManager.initialize();
 
   const data = {
     currency: "CHF",
-    amount: 1199.95,
+    //amount: 1199.95,
+    message: "Unstructured message",
     creditor: {
       name: "Robert Schneider AG",
       address: "Rue du Lac 1268",

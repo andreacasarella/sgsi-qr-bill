@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path = require("path");
 const fs = require("fs");
+const DatabaseManager_1 = require("./DatabaseManager");
 const SwissQRBill = require("swissqrbill");
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('test.db');
+const dbManager = new DatabaseManager_1.DatabaseManager("test.db");
 let win = null;
 const args = process.argv.slice(1), serve = args.some(val => val === '--serve');
 const fp = require("find-free-port");
@@ -97,22 +97,12 @@ electron_1.ipcMain.on('init-rest-api', (event, arg) => {
         event.sender.send('init-rest-api-error', err);
     });
 });
-electron_1.ipcMain.on('ready', (event, arg) => {
-    db.serialize(() => {
-        db.run("CREATE TABLE lorem (info TEXT)");
-        const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-        for (let i = 0; i < 10; i++) {
-            stmt.run("Ipsum " + i);
-        }
-        stmt.finalize();
-        db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
-            console.log(row.id + ": " + row.info);
-        });
-    });
-    db.close();
+electron_1.ipcMain.on('ready', (event, arg) => __awaiter(void 0, void 0, void 0, function* () {
+    yield dbManager.initialize();
     const data = {
         currency: "CHF",
-        amount: 1199.95,
+        //amount: 1199.95,
+        message: "Unstructured message",
         creditor: {
             name: "Robert Schneider AG",
             address: "Rue du Lac 1268",
@@ -133,7 +123,7 @@ electron_1.ipcMain.on('ready', (event, arg) => {
         console.log("PDF has been successfully created.");
     });
     initApp().then(() => event.sender.send('ready'));
-});
+}));
 function initApp() {
     return __awaiter(this, void 0, void 0, function* () {
         return true;

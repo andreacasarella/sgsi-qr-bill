@@ -14,6 +14,7 @@ import {
 } from "@angular/fire/auth";
 import {constants} from "../../../environment/constants";
 import {I18nService} from "../../@core/i18n/i18n.service";
+import {SpinnerService} from "../../@commons/services/spinner.service";
 
 @Injectable()
 export class AuthService {
@@ -22,14 +23,20 @@ export class AuthService {
     private afAuth: Auth,
     private router: Router,
     private snackBar: MatSnackBar,
-    private i18n: I18nService
+    private i18n: I18nService,
+    private spinnerService: SpinnerService
   ) {
   }
 
   login(email: string, password: string): void {
+    this.spinnerService.show('Autenticazione in corso...');
     signInWithEmailAndPassword(this.afAuth, email, password)
-      .then(_ => this.router.navigate(['']))
+      .then(_ => {
+        this.spinnerService.hide();
+        this.router.navigate([''])
+      })
       .catch(err => {
+        this.spinnerService.hide();
         this.snackBar.open(this.i18n.translate(`${constants.firebaseErrorKeyPrefix}${err.code}`), undefined, <MatSnackBarConfig>constants.snackBarErrorConfig);
       });
   }

@@ -14,6 +14,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {VerifyEmailComponent} from './components/verify-email/verify-email.component';
 import {ErrorsPhrasePipe} from "../@commons/pipes/error-phrase/errors-phrase.pipe";
 import {AuthService} from "./services/auth.service";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {AuthService} from "./services/auth.service";
     MatCardModule,
     MatSnackBarModule,
     MatDividerModule,
-    ErrorsPhrasePipe
+    ErrorsPhrasePipe,
+    MatIconModule
   ],
   providers: [
     {provide: AuthService, useClass: AuthService}

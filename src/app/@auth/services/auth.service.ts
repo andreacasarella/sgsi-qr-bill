@@ -98,15 +98,29 @@ export class AuthService {
   }
 */
   updateProfilePhotoURL(user: User, photoURL: string | null): void {
+    this.spinnerService.show('Aggiornamento profilo in corso...');
     updateProfile(user, {photoURL: photoURL})
-      .then(() => this.snackBar.open('Profilo aggiornato', undefined, {duration: 2000}))
-      .catch(err => this.snackBar.open(this.i18n.translate(`${constants.firebaseErrorKeyPrefix}${err.code}`), undefined, <MatSnackBarConfig>constants.snackBarErrorConfig))
+      .then(() => {
+        this.snackBar.open('Profilo aggiornato', undefined, {duration: 2000});
+        this.spinnerService.hide();
+      })
+      .catch(err => {
+        this.snackBar.open(this.i18n.translate(`${constants.firebaseErrorKeyPrefix}${err.code}`), undefined, <MatSnackBarConfig>constants.snackBarErrorConfig);
+        this.spinnerService.hide();
+      })
   }
 
   updateProfileDisplayName(user: User, displayName: string | null): void {
+    this.spinnerService.show('Aggiornamento profilo in corso...');
     updateProfile(user, {displayName: displayName})
-      .then(() => this.snackBar.open('Profilo aggiornato', undefined, {duration: 2000}))
-      .catch(err => this.snackBar.open(this.i18n.translate(`${constants.firebaseErrorKeyPrefix}${err.code}`), undefined, <MatSnackBarConfig>constants.snackBarErrorConfig))
+      .then(() => {
+        this.snackBar.open('Profilo aggiornato', undefined, {duration: 2000});
+        this.spinnerService.hide();
+      })
+      .catch(err => {
+        this.snackBar.open(this.i18n.translate(`${constants.firebaseErrorKeyPrefix}${err.code}`), undefined, <MatSnackBarConfig>constants.snackBarErrorConfig);
+        this.spinnerService.hide();
+      })
   }
 
 }

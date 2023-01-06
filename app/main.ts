@@ -2,20 +2,16 @@ import {app, BrowserWindow, ipcMain, screen} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import {DatabaseManager} from './DatabaseManager';
+import {Api} from "./api";
 
 const SwissQRBill = require("swissqrbill");
+const api = new Api();
 const dbManager = new DatabaseManager("test.db");
+
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
-
-const fp = require("find-free-port")
-fp(3000).then((freePort: any) => {
-  console.log('found ' + freePort);
-}).catch((err: any) => {
-  console.error(err);
-});
 
 function createWindow(): BrowserWindow {
 
@@ -93,14 +89,9 @@ try {
   // throw e;
 }
 
-ipcMain.on('init-rest-api', (event, arg) => {
-  fp(30000000000).then((freePort: number[]) => {
-    console.log('found free port' + freePort[0]);
-    event.sender.send('init-rest-api', freePort[0])
-  }).catch((err: any) => {
-    console.error(err);
-    event.sender.send('init-rest-api-error', err)
-  });
+ipcMain.on('init-rest-api', async (event, arg) => {
+  await api.init();
+  event.sender.send('init-rest-api', api.port);
 });
 
 ipcMain.on('ready', async (event, arg) => {

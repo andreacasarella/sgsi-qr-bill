@@ -73,3 +73,10 @@ export interface Link {
   label?: string;
   url: string
 }
+
+export interface PaginatedResults<T> {
+  results: T[];
+  page: number;
+  perPage: number;
+  total: number;
+}

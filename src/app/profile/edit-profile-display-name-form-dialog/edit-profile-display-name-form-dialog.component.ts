@@ -1,9 +1,18 @@
 import {Component, Inject, inject, OnInit} from '@angular/core';
 import {AuthService} from "../../@auth/services/auth.service";
 import {AuthUserService} from "../../@auth/services/auth-user.service";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, NonNullableFormBuilder, ValidationErrors, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {User} from "@angular/fire/auth";
+import {SpinnerService} from "../../@commons/services/spinner.service";
+
+enum Fields {
+  DISPLAY_NAME = 'displayName'
+}
+
+interface EditProfileDisplayNameFormGroup {
+  [Fields.DISPLAY_NAME]: FormControl<string>;
+}
 
 @Component({
   selector: 'app-edit-profile-display-name-form-dialog',
@@ -13,14 +22,12 @@ import {User} from "@angular/fire/auth";
 export class EditProfileDisplayNameFormDialogComponent implements OnInit {
 
   private authService: AuthService = inject(AuthService);
+  private spinnerService: SpinnerService = inject(SpinnerService);
+  private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+
   userService: AuthUserService = inject(AuthUserService);
-
-  fb: FormBuilder = inject(FormBuilder);
-  form: FormGroup | null = null;
-
-  get displayNameControl(): AbstractControl | null | undefined {
-    return this.form?.get('displayName');
-  }
+  form: FormGroup<EditProfileDisplayNameFormGroup> | null = null;
+  fields = Fields;
 
   constructor(
     public dialogRef: MatDialogRef<EditProfileDisplayNameFormDialogComponent>,
@@ -33,7 +40,7 @@ export class EditProfileDisplayNameFormDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      displayName: [this.data.displayName || '', [Validators.required, Validators.maxLength(100)]]
+      [Fields.DISPLAY_NAME]: [this.data.displayName || '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
@@ -42,9 +49,14 @@ export class EditProfileDisplayNameFormDialogComponent implements OnInit {
   }
 
   submit(user: User): void {
-    if (this.form) {
-      this.authService.updateProfileDisplayName(user, this.form.get('displayName')?.value);
+    if (this.form && this.form.value.displayName) {
+      this.authService.updateProfileDisplayName(user, this.form.value.displayName);
       this.dialogRef.close(true);
     }
   }
+
+  formControlErrors(fieldName: Fields): ValidationErrors | null | undefined {
+    return this.form?.controls[fieldName].errors;
+  }
+
 }

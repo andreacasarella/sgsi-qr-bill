@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {ElectronService} from "./services";
-import {BackendService} from "./services/backend.service";
+import {ElectronService, OrganizationsService} from "./services";
+import {RestApiService} from "./services/rest-api/rest-api.service";
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,16 @@ import {BackendService} from "./services/backend.service";
 export class AppComponent {
   constructor(
     private electronService: ElectronService,
-    private backendService: BackendService
+    private backendService: RestApiService,
+    private organizationsService: OrganizationsService
   ) {
     if (electronService.isElectron) {
       console.log(process.env);
       console.log('Run in electron');
       console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
       console.log('NodeJS childProcess', this.electronService.childProcess);
-      this.backendService.initRestApi().subscribe(value => console.log('initRestApi', value), error => console.log(error))
+      this.backendService.init();
+      this.organizationsService.index().subscribe((next) => alert(next));
     } else {
       console.log('Run in browser');
     }

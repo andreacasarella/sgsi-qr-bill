@@ -15,6 +15,8 @@ import {getFirestore, provideFirestore} from '@angular/fire/firestore';
 import {environment} from "../environment/environment";
 import {getAuth, provideAuth} from "@angular/fire/auth";
 import {getStorage, provideStorage} from "@angular/fire/storage";
+import {TitleStrategy} from "@angular/router";
+import {I18nPageTitleStrategy} from "./@core/i18n/i18n-page-title-strategy";
 
 
 // AoT requires an exported function for factories
@@ -54,8 +56,10 @@ registerLocaleData(localeItCH);
       deps: [Injector],
       multi: true
     },
+    {provide: TitleStrategy, useClass: I18nPageTitleStrategy},
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

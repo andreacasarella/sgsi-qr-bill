@@ -18,6 +18,15 @@
         "description": "Per poter effettuare qualsiasi operazione è necessario verificare l'indirizzo email {{email}}.",
         "sendEmailVerification": "Invia l'email di verifica"
       }
+    },
+    "profile": {
+      "title": "Il mio profilo",
+      "labels": {
+        "lastLogin": "Ultimo login"
+      },
+      "actions": {
+        "addUsername": "Aggiungi nome utente"
+      }
     }
   },
   "dialogs": {

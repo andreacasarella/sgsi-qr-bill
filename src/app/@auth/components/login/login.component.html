@@ -8,24 +8,32 @@
     </mat-card-header>
     <mat-divider class="my-3"></mat-divider>
     <mat-card-content>
-      <form (ngSubmit)="login()" [formGroup]="form" class="d-flex flex-column gap-3">
+      <form (ngSubmit)="login()" *ngIf="form" [formGroup]="form" class="d-flex flex-column gap-3">
         <mat-form-field>
-          <mat-label>{{ 'labels.email' | translate }}</mat-label>
+          <mat-label>{{ 'labels.' + fields.EMAIL | translate }}</mat-label>
           <input autocomplete="username"
-                 formControlName="email"
+                 [formControlName]="fields.EMAIL"
                  matInput
                  type="email"
+                 placeholder="Inserisci email"
                  autofocus>
-          <mat-error *ngIf="emailControl?.errors">{{ emailControl?.errors | errorsPhrase }}</mat-error>
+          <mat-error
+            *ngIf="formControlError(fields.EMAIL)">{{ formControlError(fields.EMAIL) | errorsPhrase }}</mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>{{ 'labels.password' | translate }}</mat-label>
+          <mat-label>{{ 'labels.' + fields.PASSWORD | translate }}</mat-label>
           <input autocomplete="current-password"
-                 formControlName="password"
+                 [formControlName]="fields.PASSWORD"
                  matInput
-                 type="password">
-          <mat-error *ngIf="passwordControl?.errors">{{ passwordControl?.errors | errorsPhrase }}</mat-error>
+                 placeholder="Inserisci password"
+                 [type]="hidePassword ? 'password' : 'text'">
+          <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                  [attr.aria-label]="'Nascondi password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="formControlError(fields.PASSWORD)">{{ formControlError(fields.PASSWORD) | errorsPhrase }}</mat-error>
         </mat-form-field>
 
         <button [disabled]="form.invalid"

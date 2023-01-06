@@ -20,13 +20,10 @@ import {
 export class ProfileComponent {
 
   private authService: AuthService = inject(AuthService);
-  userService: AuthUserService = inject(AuthUserService);
-  storage: Storage = inject(Storage);
+  private storage: Storage = inject(Storage);
   private dialog: MatDialog = inject(MatDialog);
 
-  constructor() {
-  }
-
+  userService: AuthUserService = inject(AuthUserService);
 
   editProfileDisplayName(user: User): void {
     this.dialog.open(EditProfileDisplayNameFormDialogComponent, {
@@ -46,7 +43,7 @@ export class ProfileComponent {
   deleteProfilePhoto(user: User): void {
     const photoURLRef = ref(this.storage, 'users/' + user.uid);
     deleteObject(photoURLRef)
-      .then(result => this.authService.updateProfilePhotoURL(user, ''))
-      .catch();
+      .then(() => this.authService.updateProfilePhotoURL(user, ''))
+      .catch((err) => console.log('Error deleting photo', err));
   }
 }

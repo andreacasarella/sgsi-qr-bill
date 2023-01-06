@@ -95,6 +95,11 @@ app-search-bar {
   }
 }
 
+/* Spinner Overlay */
+.spinner-overlay-backdrop {
+  background-color: rgba(255, 255, 255, .75);
+}
+
 /* Main */
 main {
   padding: 16px;

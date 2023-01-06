@@ -1,12 +1,23 @@
-import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {User} from "@angular/fire/auth";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {base64ToFile, Dimensions, ImageCroppedEvent, ImageTransform} from "ngx-image-cropper";
+import {FormControl, FormGroup, NonNullableFormBuilder, Validators} from "@angular/forms";
+import {Dimensions, ImageCroppedEvent, ImageTransform} from "ngx-image-cropper";
 import {AuthService} from "../../@auth/services/auth.service";
 import {AuthUserService} from "../../@auth/services/auth-user.service";
 import {getDownloadURL, ref, Storage, uploadString} from "@angular/fire/storage";
-import {tap} from "rxjs";
+import {debounceTime, shareReplay, tap} from "rxjs";
+import {SpinnerService} from "../../@commons/services/spinner.service";
+
+enum Fields {
+  ZOOM = 'zoom',
+  PHOTO_URL = 'photoURL'
+}
+
+interface EditProfilePhotoFormGroup {
+  [Fields.ZOOM]: FormControl<number>;
+  [Fields.PHOTO_URL]: FormControl<string>;
+}
 
 @Component({
   selector: 'app-edit-profile-photo-form-dialog',
@@ -15,21 +26,22 @@ import {tap} from "rxjs";
 })
 export class EditProfilePhotoFormDialogComponent implements OnInit {
 
-  @ViewChild('file', {static: true}) file!: ElementRef;
-
   private authService: AuthService = inject(AuthService);
   userService: AuthUserService = inject(AuthUserService);
 
-  storage: Storage = inject(Storage);
-  fb: FormBuilder = inject(FormBuilder);
+  private storage: Storage = inject(Storage);
+  private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  private spinnerService: SpinnerService = inject(SpinnerService);
 
-  form: FormGroup | null = null;
-
+  form: FormGroup<EditProfilePhotoFormGroup> | null = null;
+  fields = Fields;
   imageChangedEvent: any = '';
   croppedImage: any = '';
   canvasRotation = 0;
   rotation = 0;
   currentScale = 1;
+  max = 1.9;
+  min = 0.1
   step = 0.1;
   showCropper = false;
   containWithinAspectRatio = false;
@@ -43,25 +55,17 @@ export class EditProfilePhotoFormDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      zoom: [1],
-      photoURL: ['', [Validators.required]]
+      [Fields.ZOOM]: [1],
+      [Fields.PHOTO_URL]: ['', [Validators.required]]
     });
 
-    this.form.get('zoom')?.valueChanges.pipe(
+    this.form.controls['zoom']?.valueChanges.pipe(
+      debounceTime(200),
       tap((next) => {
         this.setScale(next);
-      })
+      }),
+      shareReplay(1)
     ).subscribe();
-
-    // this.form?.get('zoom')?.setValue(0);
-  }
-
-  /*ngAfterViewInit(): void {
-    this.selectFile();
-  }*/
-
-  selectFile(): void {
-    this.file.nativeElement.click();
   }
 
   close(): void {
@@ -69,13 +73,15 @@ export class EditProfilePhotoFormDialogComponent implements OnInit {
   }
 
   submit(user: User): void {
-    if (this.form) {
+    if (this.form && this.form.value.photoURL) {
       const photoURLRef = ref(this.storage, 'users/' + user.uid);
-      uploadString(photoURLRef, this.form.get('photoURL')?.value, 'data_url').then(
+      this.spinnerService.show('Upload immagine profilo in corso...');
+      uploadString(photoURLRef, this.form.value.photoURL, 'data_url').then(
         (result) => {
           console.log(result);
           getDownloadURL(photoURLRef).then(
             (photoURL) => {
+              this.spinnerService.hide();
               this.authService.updateProfilePhotoURL(user, photoURL);
               this.dialogRef.close(true);
             }
@@ -86,30 +92,32 @@ export class EditProfilePhotoFormDialogComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log(event)
+    // console.log(event)
     this.imageChangedEvent = event;
   }
 
   imageCropped(event: ImageCroppedEvent) {
     if (event.base64) {
       this.croppedImage = event.base64;
-      this.form?.get('photoURL')?.setValue(event.base64);
-      console.log(event, base64ToFile(event.base64));
+      this.form?.patchValue({
+        [Fields.PHOTO_URL]: event.base64
+      });
+      // console.log(event, base64ToFile(event.base64));
     }
   }
 
   imageLoaded() {
     this.showCropper = true;
-    console.log('Image loaded');
+    // console.log('Image loaded');
   }
 
   cropperReady(sourceImageDimensions: Dimensions) {
-    console.log('Cropper ready', sourceImageDimensions);
+    // console.log('Cropper ready', sourceImageDimensions);
   }
 
   loadImageFailed() {
     console.log('Load failed');
-    this.dialogRef.close();
+    this.form?.reset();
   }
 
   setScale(value: number): void {
@@ -121,21 +129,17 @@ export class EditProfilePhotoFormDialogComponent implements OnInit {
   }
 
   zoomOut() {
-    this.form?.get('zoom')?.setValue(this.form?.get('zoom')?.value - this.step)
-    /*this.currentScale -= this.form?.get('zoom')?.value / 10;
-    this.transform = {
-      ...this.transform,
-      scale: this.currentScale
-    };*/
+    if (this.form && this.form.value.zoom)
+      this.form.patchValue({
+        [Fields.ZOOM]: this.form.value.zoom - this.step
+      });
   }
 
   zoomIn() {
-    this.form?.get('zoom')?.setValue(this.form?.get('zoom')?.value + this.step)
-    /*this.currentScale += this.form?.get('zoom')?.value / 10;
-    this.transform = {
-      ...this.transform,
-      scale: this.currentScale
-    };*/
+    if (this.form && this.form.value.zoom)
+      this.form.patchValue({
+        [Fields.ZOOM]: this.form.value.zoom + this.step
+      });
   }
 
 }

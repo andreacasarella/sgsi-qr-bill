@@ -1,31 +1,38 @@
-<div class="d-flex flex-column mt-3 mb-3 ps-3">
-  <img src="assets/icons/swiss-qr-bill.svg" width="45px">
+<div class="d-flex flex-column ps-3">
+  <img class="mt-3 mb-3" src="assets/icons/swiss-qr-bill.svg" width="45px">
 </div>
-<mat-nav-list class="pt-2">
+<div class="flex-grow-1">
+  <mat-nav-list class="pt-2">
 
-  <a #dashboardLink="routerLinkActive"
-     [routerLink]="['/dashboard']"
-     mat-list-item
-     routerLinkActive="active">
-    <mat-icon [fontSet]="dashboardLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>dashboard</mat-icon>
-    <span matListItemTitle>Dashboard</span>
-  </a>
+    <a #dashboardLink="routerLinkActive"
+       [routerLink]="['/dashboard']"
+       mat-list-item
+       routerLinkActive="active">
+      <mat-icon [fontSet]="dashboardLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>dashboard</mat-icon>
+      <span matListItemTitle>Dashboard</span>
+    </a>
 
-  <a #addressesLink="routerLinkActive"
-     [routerLink]="['/addresses']"
-     mat-list-item
-     routerLinkActive="active">
-    <mat-icon [fontSet]="addressesLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>contact_mail
-    </mat-icon>
-    <span matListItemTitle>Indirizzi</span>
-  </a>
+    <a #addressesLink="routerLinkActive"
+       [routerLink]="['/addresses']"
+       mat-list-item
+       routerLinkActive="active">
+      <mat-icon [fontSet]="addressesLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>contact_mail
+      </mat-icon>
+      <span matListItemTitle>Clienti</span>
+    </a>
 
-  <a #invoicesLink="routerLinkActive"
-     [routerLink]="['/invoices']"
-     mat-list-item
-     routerLinkActive="active">
-    <mat-icon [fontSet]="invoicesLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>receipt</mat-icon>
-    <span matListItemTitle>Fatture</span>
-  </a>
-
-</mat-nav-list>
+    <a #invoicesLink="routerLinkActive"
+       [routerLink]="['/invoices']"
+       mat-list-item
+       routerLinkActive="active">
+      <mat-icon [fontSet]="invoicesLink.isActive ? '' : 'material-icons-outlined'" matListItemIcon>receipt</mat-icon>
+      <span matListItemTitle>Fatture</span>
+    </a>
+  </mat-nav-list>
+</div>
+<div class="mb-2 pb-4 text-center">
+  <button mat-stroked-button>
+    <mat-icon>add</mat-icon>
+    Crea organizzazione
+  </button>
+</div>

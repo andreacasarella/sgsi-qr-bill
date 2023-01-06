@@ -19,18 +19,21 @@ const routes: Routes = [
     component: LoginComponent,
     canActivate: [AuthGuard],
     data: {authGuardPipe: redirectLoggedInToDashboard},
+    title: 'components.login.title'
   },
   {
     path: 'verify-email',
     component: VerifyEmailComponent,
     canActivate: [AuthGuard],
-    data: {authGuardPipe: redirectUnauthorizedToLogin}
+    data: {authGuardPipe: redirectUnauthorizedToLogin},
+    title: 'components.verifyEmail.title'
   },
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
     canActivate: [AuthGuard],
     data: {authGuardPipe: redirectLoggedInToDashboard},
+    title: 'components.forgotPassword.title'
   }
 ];
 
@@ -39,4 +42,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AuthRoutingModule {
+
 }

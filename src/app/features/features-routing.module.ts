@@ -24,6 +24,12 @@ const routes: Routes = [
         loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule),
       },
       {
+        path: 'organizations',
+        canActivate: [AuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToVerifyEmail},
+        loadChildren: () => import('../organizations/organizations.module').then(m => m.OrganizationsModule),
+      },
+      {
         path: 'profile',
         canActivate: [AuthGuard],
         data: {authGuardPipe: redirectUnauthorizedToVerifyEmail},

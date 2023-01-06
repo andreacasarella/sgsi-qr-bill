@@ -1,7 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, NonNullableFormBuilder, ValidationErrors, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {constants} from "../../../../environment/constants";
+
+enum Fields {
+  EMAIL = 'email',
+  PASSWORD = 'password'
+}
+
+interface LoginFormGroup {
+  [Fields.EMAIL]: FormControl<string>;
+  [Fields.PASSWORD]: FormControl<string>;
+}
 
 @Component({
   selector: 'app-login',
@@ -12,32 +22,33 @@ export class LoginComponent implements OnInit {
 
   readonly webAppTitle = constants.webAppTitle;
 
-  form!: UntypedFormGroup;
+  form: FormGroup<LoginFormGroup> | null = null;
+
+  fields = Fields;
+
+  hidePassword: boolean = true;
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: NonNullableFormBuilder,
     private authService: AuthService
   ) {
   }
 
-  get emailControl(): AbstractControl | null {
-    return this.form?.get('email');
-  }
-
-  get passwordControl(): AbstractControl | null {
-    return this.form?.get('password');
+  formControlError(fieldName: Fields): ValidationErrors | null | undefined {
+    return this.form?.controls[fieldName].errors;
   }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
+      [Fields.EMAIL]: ['', [Validators.required, Validators.email]],
+      [Fields.PASSWORD]: ['', [Validators.required]]
     })
   }
 
   login(): void {
-    this.authService
-      .login(this.emailControl?.value, this.passwordControl?.value)
+    if (this.form && this.form.value.email && this.form.value.password) {
+      this.authService.login(this.form.value.email, this.form.value.password)
+    }
   }
 
 }

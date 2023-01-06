@@ -4,11 +4,12 @@
     <div mat-dialog-content class="mat-typography d-flex flex-column">
       <mat-form-field>
         <mat-label>{{ 'labels.displayName' | translate }}</mat-label>
-        <input formControlName="displayName"
+        <input [formControlName]="fields.DISPLAY_NAME"
                matInput
                type="email"
                autofocus>
-        <mat-error *ngIf="displayNameControl?.errors">{{ displayNameControl?.errors | errorsPhrase }}</mat-error>
+        <mat-error
+          *ngIf="formControlErrors(fields.DISPLAY_NAME)">{{ formControlErrors(fields.DISPLAY_NAME) | errorsPhrase }}</mat-error>
       </mat-form-field>
     </div>
     <div mat-dialog-actions align="end" class="border-top">

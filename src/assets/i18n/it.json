@@ -18,6 +18,15 @@
         "description": "Per poter effettuare qualsiasi operazione è necessario verificare l'indirizzo email {{email}}.",
         "sendEmailVerification": "Invia l'email di verifica"
       }
+    },
+    "profile": {
+      "title": "Il mio profilo",
+      "labels": {
+        "lastLogin": "Ultimo login"
+      },
+      "actions": {
+        "addUsername": "Aggiungi nome utente"
+      }
     }
   },
   "dialogs": {
@@ -105,6 +114,7 @@
       "auth/reserved-claims": "Una o piu attestazioni utente personalizzate fornite a setCustomUserClaims() sono riservate.",
       "auth/session-cookie-expired": "Il cookie di sessione Firebase fornito e scaduto.",
       "auth/session-cookie-revoked": "Il cookie di sessione Firebase e stato revocato.",
+      "auth/too-many-requests": "Troppe richieste effettuate, attendere e riprovare.",
       "auth/uid-already-exists": "L' uid fornito e gia utilizzato da un utente esistente. Ogni utente deve avere un uid univoco.",
       "auth/unauthorized-continue-uri": "Il dominio dell'URL continua non e autorizzato. Inserisci nella whitelist il dominio nella console di Firebase.",
       "auth/user-not-found": "Non esiste alcun record utente esistente corrispondente all'identificatore fornito.",

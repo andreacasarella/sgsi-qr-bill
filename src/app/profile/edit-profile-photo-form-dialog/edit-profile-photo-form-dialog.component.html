@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>{{ "Aggiorna immagine profilo" | translate}}</h2>
-<div mat-dialog-content class="mat-typography d-flex flex-column" *ngIf="form" [formGroup]="form">
+<div mat-dialog-content class="mat-typography d-flex flex-column gap-3" *ngIf="form" [formGroup]="form">
   <ng-container *ngIf="!showCropper">
     <button mat-stroked-button (click)="file.click()">
       <mat-icon>add</mat-icon>
@@ -34,28 +34,28 @@
   </div>
   <ng-container *ngIf="showCropper">
     <div class="d-flex flex-row justify-content-center">
-      <button mat-icon-button [disabled]="form.get('zoom')?.value < 0.2" (click)="zoomOut()">
+      <button mat-icon-button [disabled]="form.value.zoom && form.value.zoom < min + step" (click)="zoomOut()">
         <mat-icon>remove</mat-icon>
       </button>
       <mat-slider
-        [max]="1.9"
-        [min]="0.1"
+        [max]="max"
+        [min]="min"
         [step]="step"
         class="flex-grow-1">
-        <input matSliderThumb formControlName="zoom">
+        <input matSliderThumb [formControlName]="fields.ZOOM">
       </mat-slider>
-      <button mat-icon-button [disabled]="form.get('zoom')?.value > 1.8" (click)="zoomIn()">
+      <button mat-icon-button [disabled]="form.value.zoom && form.value.zoom > max - step" (click)="zoomIn()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
   </ng-container>
-</div>
-<div mat-dialog-actions align="end" class="border-top">
-  <button (click)="close()" mat-button
-          type="button">{{ 'actions.cancel' | translate }}</button>
-  <ng-container *ngIf="userService.$user | async as user">
-    <button (click)="submit(user)" [disabled]="form?.invalid" [color]="'primary'" mat-button
-            type="button">{{ 'actions.confirm' | translate }}</button>
-  </ng-container>
-</div>
 
+  <div mat-dialog-actions align="end" class="border-top">
+    <button (click)="close()" mat-button
+            type="button">{{ 'actions.cancel' | translate }}</button>
+    <ng-container *ngIf="userService.$user | async as user">
+      <button (click)="submit(user)" [disabled]="form.invalid" [color]="'primary'" mat-button
+              type="button">{{ 'actions.confirm' | translate }}</button>
+    </ng-container>
+  </div>
+</div>

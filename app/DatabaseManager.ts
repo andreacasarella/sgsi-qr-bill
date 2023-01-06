@@ -4,7 +4,7 @@ const fs = require('fs')
 
 export class DatabaseManager {
 
-  databaseFile: string;
+  private readonly databaseFile: string;
 
   constructor(databaseFile: string) {
     this.databaseFile = databaseFile;

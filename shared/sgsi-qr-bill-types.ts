@@ -1,12 +1,12 @@
 export interface Organization {
   id?: number;
-  title: string;          /* maxLength 16 */
+  title?: string;          /* maxLength 16 */
   name: string;           /* maxLength 70 */
   ibanAccount: string;    /* maxLength 21 */
   address: Address;
-  email: string;          /* maxLength 100 */
-  website: Link;
-  logoUrl: Link;
+  email?: string;          /* maxLength 100 */
+  website?: Link;
+  logoUrl?: Link;
   createdAt?: string;      /* ISO 8601 */
   updatedAt?: string;      /* ISO 8601 */
 }
@@ -28,12 +28,13 @@ export interface Client {
 export interface Invoice {
   id?: number;
   title?: string;
-  salutation?: boolean;
+  salutation?: string;
   content?: string;
   signatures?: Signature[];
   currency: 'CHF' | 'EUR';
   amount?: number;          /* maxLength 12 digits */
   message?: string;         /* maxLength 140 */
+  reference?: string;       /* maxLength 27 */
   language: 'IT' | 'DE' | 'FR' | 'EN';
   creditor: Creditor;
   debtor: Debtor;
@@ -65,7 +66,7 @@ export interface Signature {
   position: string;
   firstName: string;      /* maxLength 70 */
   lastName: string;       /* maxLength 70 */
-  imageUrl: Link;
+  imageUrl?: Link;
 }
 
 export interface Link {

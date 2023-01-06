@@ -13,7 +13,7 @@ const electron_1 = require("electron");
 const path = require("path");
 const fs = require("fs");
 const DatabaseManager_1 = require("./DatabaseManager");
-const SwissQRBill = require("swissqrbill");
+const PdfGenerator_1 = require("./PdfGenerator");
 const dbManager = new DatabaseManager_1.DatabaseManager("test.db");
 let win = null;
 const args = process.argv.slice(1), serve = args.some(val => val === '--serve');
@@ -99,29 +99,56 @@ electron_1.ipcMain.on('init-rest-api', (event, arg) => {
 });
 electron_1.ipcMain.on('ready', (event, arg) => __awaiter(void 0, void 0, void 0, function* () {
     yield dbManager.initialize();
-    const data = {
+    const invoice = {
+        title: "Tassa sociale 2023",
+        salutation: "Mendrisio, 3 gennaio 2023",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in suscipit purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus nec hendrerit felis. Morbi aliquam facilisis risus eu lacinia. Sed eu leo in turpis fringilla hendrerit. Ut nec accumsan nisl. Suspendisse rhoncus nisl posuere tortor tempus et dapibus elit porta. Cras leo neque, elementum a rhoncus ut, vestibulum non nibh. Phasellus pretium justo turpis. Etiam vulputate, odio vitae tincidunt ultricies, eros odio dapibus nisi, ut tincidunt lacus arcu eu elit. Aenean velit erat, vehicula eget lacinia ut, dignissim non tellus. Aliquam nec lacus mi, sed vestibulum nunc. Suspendisse potenti. Curabitur vitae sem turpis. Vestibulum sed neque eget dolor dapibus porttitor at sit amet sem. Fusce a turpis lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;",
+        signatures: [{
+                position: "CEO",
+                firstName: "Pinco",
+                lastName: "Pallino"
+            }],
         currency: "CHF",
-        //amount: 1199.95,
-        message: "Unstructured message",
+        message: "abc",
+        language: "IT",
         creditor: {
-            name: "Robert Schneider AG",
-            address: "Rue du Lac 1268",
-            zip: 2501,
-            city: "Biel",
-            account: "CH5800791123000889012",
-            country: "CH"
+            organizationId: 1,
+            name: "Società",
+            ibanAccount: "CH94082520243206C000C",
+            address: {
+                street: "Via S. Gottardo",
+                buildingNumber: "13a",
+                zip: "6900",
+                city: "Lugano",
+                country: "CH"
+            },
+            email: "email.address@gmail.com",
+            website: {
+                label: "website",
+                url: "www.google.com"
+            },
+            // logoUrl: {
+            //   label: "logo",
+            //   url: "./logo2.png"
+            // }
         },
         debtor: {
-            name: "Pia-Maria Rutschmann-Schnyder",
-            address: "Grosse Marktgasse 28",
-            zip: 9400,
-            city: "Rorschach",
-            country: "CH"
-        }
+            clientId: 1,
+            organizationId: 1,
+            title: "Sig.",
+            firstName: "Pia-Maria",
+            lastName: "Rutschmann-Schnyder",
+            address: {
+                street: "Grosse Marktgasse",
+                buildingNumber: "28",
+                zip: "9400",
+                city: "Rorschach",
+                country: "CH"
+            }
+        },
+        status: 'OPEN'
     };
-    const pdf = new SwissQRBill.PDF(data, "qrbill.pdf", { "language": "IT" }, () => {
-        console.log("PDF has been successfully created.");
-    });
+    new PdfGenerator_1.PdfGenerator().generate(invoice, "qrbill.pdf");
     initApp().then(() => event.sender.send('ready'));
 }));
 function initApp() {

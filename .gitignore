@@ -53,3 +53,9 @@ test.db
 
 #electron app
 /app/node_modules
+/app/*.js
+/app/*.js.map
+
+#shared
+/shared/*.js
+/shared/*.js.map

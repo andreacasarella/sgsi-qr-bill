@@ -8,13 +8,17 @@ export class PdfGenerator {
   private readonly margin = 15;
   private readonly logoWith = 60;
   private readonly headerHeight = 15;
+  private readonly signatureHeight = 15;
+  private readonly signatureSpaceBetween = 10;
 
   private readonly font: string;
+  private readonly fontBold: string;
   private readonly fontSize: number;
   private readonly fontSizeLarge: number;
 
   constructor(font:string = "Helvetica", fontSize: number = 10) {
     this.font = font;
+    this.fontBold = font + "-Bold";
     this.fontSize = fontSize;
     this.fontSizeLarge = fontSize + 1;
   }
@@ -59,43 +63,82 @@ export class PdfGenerator {
       height: 0
     });
 
-    if(invoice.salutation) {
-      // Add salutation
-      pdf.text(invoice.salutation, mm2pt(this.margin), mm2pt(88), {
+    let titleHeight = 0;
+    if(invoice.title) {
+      pdf.font(this.fontBold);
+      pdf.fontSize(this.fontSizeLarge);
+      pdf.text(invoice.title, {
         width: textWidth,
         height: mm2pt(8),
         align: "justify"
       });
+      titleHeight = pdf.currentLineHeight(true)
       pdf.moveDown();
+      pdf.font(this.font);
+      pdf.fontSize(this.fontSize);
+    }
+
+    let salutationHeight = 0;
+    if(invoice.salutation) {
+      // Add salutation
+      pdf.text(invoice.salutation, {
+        width: textWidth,
+        height: mm2pt(8),
+        align: "justify"
+      });
+      salutationHeight = pdf.currentLineHeight(true)
+      pdf.moveDown(0.5);
     }
 
     if(invoice.content) {
       // Add text
       pdf.text(invoice.content, {
         width: textWidth,
-        height: mm2pt(65),
+        height: mm2pt(75) - titleHeight - salutationHeight,
         align: "justify"
       });
+      pdf.moveDown();
     }
 
     if(invoice.signatures?.length === 1) {
       // Add single signature
-      pdf.moveDown();
-      pdf.text("\n\n" + this.signatureToString(invoice.signatures[0]), {
-        columns: 2,
-        width: textWidth,
-        height: mm2pt(8),
+      pdf.text(this.signatureToString(invoice.signatures[0]),mm2pt(this.margin) + (textWidth + mm2pt(this.signatureSpaceBetween)) / 2, pdf.y, {
+        width: (textWidth - mm2pt(this.signatureSpaceBetween)) / 2,
         align: "center"
       });
+      if(invoice.signatures[0].imageUrl) {
+        // Add image
+        pdf.moveDown(0.5);
+        const y = pdf.y;
+        pdf.image(invoice.signatures[0].imageUrl.url, mm2pt(this.margin) + (textWidth + mm2pt(this.signatureSpaceBetween)) / 2, y, {
+          fit: [(textWidth - mm2pt(this.signatureSpaceBetween)) / 2, mm2pt(this.signatureHeight)],
+          width: (textWidth - mm2pt(this.signatureSpaceBetween)) / 2,
+          height: mm2pt(this.signatureHeight),
+          align: "center"
+        });
+      }
     } else if(invoice.signatures?.length) {
       const length = invoice.signatures.length;
       // Add signatures
-      pdf.moveDown();
-      pdf.text(invoice.signatures.join("\n"), {
-        columns: length,
-        width: textWidth,
-        height: mm2pt(8),
-        align: "center"
+      const textY = pdf.y;
+      invoice.signatures.forEach((signature, i) => {
+        const x = mm2pt(this.margin) + textWidth * i / length + mm2pt(this.signatureSpaceBetween) / 2;
+        const width = textWidth / length - mm2pt(this.signatureSpaceBetween);
+        pdf.text(this.signatureToString(signature), x, textY, {
+          width: width,
+          align: "center"
+        });
+        if (signature.imageUrl) {
+          // Add image
+          pdf.moveDown(0.5);
+          const imageY = pdf.y;
+          pdf.image(signature.imageUrl.url, x, imageY, {
+            fit: [width, mm2pt(this.signatureHeight)],
+            width: width,
+            height: mm2pt(this.signatureHeight),
+            align: "center"
+          });
+        }
       });
     }
 

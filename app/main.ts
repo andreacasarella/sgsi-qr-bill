@@ -105,7 +105,29 @@ ipcMain.on('ready', async (event, arg) => {
     signatures: [{
       position: "CEO",
       firstName: "Pinco",
-      lastName: "Pallino"
+      lastName: "Pallino",
+      // imageUrl: {
+      //   label: "signature",
+      //   url: "./logo2.png"
+      // }
+    },
+    {
+      position: "CEO",
+      firstName: "Pinco",
+      lastName: "Pallino",
+      // imageUrl: {
+      //   label: "signature",
+      //   url: "./logo2.png"
+      // }
+    },
+    {
+      position: "CEO",
+      firstName: "Pinco",
+      lastName: "Pallino",
+      // imageUrl: {
+      //   label: "signature",
+      //   url: "./logo2.png"
+      // }
     }],
     currency: "CHF",
     message: "abc",

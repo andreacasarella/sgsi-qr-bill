@@ -13,16 +13,12 @@ const electron_1 = require("electron");
 const path = require("path");
 const fs = require("fs");
 const DatabaseManager_1 = require("./DatabaseManager");
+const api_1 = require("./api");
 const PdfGenerator_1 = require("./PdfGenerator");
+const api = new api_1.Api();
 const dbManager = new DatabaseManager_1.DatabaseManager("test.db");
 let win = null;
 const args = process.argv.slice(1), serve = args.some(val => val === '--serve');
-const fp = require("find-free-port");
-fp(3000).then((freePort) => {
-    console.log('found ' + freePort);
-}).catch((err) => {
-    console.error(err);
-});
 function createWindow() {
     const size = electron_1.screen.getPrimaryDisplay().workAreaSize;
     // Create the browser window.
@@ -88,15 +84,10 @@ catch (e) {
     // Catch Error
     // throw e;
 }
-electron_1.ipcMain.on('init-rest-api', (event, arg) => {
-    fp(30000000000).then((freePort) => {
-        console.log('found free port' + freePort[0]);
-        event.sender.send('init-rest-api', freePort[0]);
-    }).catch((err) => {
-        console.error(err);
-        event.sender.send('init-rest-api-error', err);
-    });
-});
+electron_1.ipcMain.on('init-rest-api', (event, arg) => __awaiter(void 0, void 0, void 0, function* () {
+    yield api.init();
+    event.sender.send('init-rest-api', api.port);
+}));
 electron_1.ipcMain.on('ready', (event, arg) => __awaiter(void 0, void 0, void 0, function* () {
     yield dbManager.initialize();
     const invoice = {
@@ -106,7 +97,29 @@ electron_1.ipcMain.on('ready', (event, arg) => __awaiter(void 0, void 0, void 0,
         signatures: [{
                 position: "CEO",
                 firstName: "Pinco",
-                lastName: "Pallino"
+                lastName: "Pallino",
+                imageUrl: {
+                    label: "signature",
+                    url: "./logo2.png"
+                }
+            },
+            {
+                position: "CEO",
+                firstName: "Pinco",
+                lastName: "Pallino",
+                imageUrl: {
+                    label: "signature",
+                    url: "./logo2.png"
+                }
+            },
+            {
+                position: "CEO",
+                firstName: "Pinco",
+                lastName: "Pallino",
+                imageUrl: {
+                    label: "signature",
+                    url: "./logo2.png"
+                }
             }],
         currency: "CHF",
         message: "abc",
@@ -127,10 +140,10 @@ electron_1.ipcMain.on('ready', (event, arg) => __awaiter(void 0, void 0, void 0,
                 label: "website",
                 url: "www.google.com"
             },
-            // logoUrl: {
-            //   label: "logo",
-            //   url: "./logo2.png"
-            // }
+            logoUrl: {
+                label: "logo",
+                url: "./logo2.png"
+            }
         },
         debtor: {
             clientId: 1,

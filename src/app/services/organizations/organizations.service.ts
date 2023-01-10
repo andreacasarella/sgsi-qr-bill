@@ -10,7 +10,7 @@ import {filter} from "rxjs/operators";
 })
 export class OrganizationsService {
 
-  private organizationSubject = new BehaviorSubject<Organization | null>(null)
+  protected organizationSubject = new BehaviorSubject<Organization | null>(null)
   public $organization = this.organizationSubject.asObservable();
 
   private http: HttpClient = inject(HttpClient);
@@ -27,6 +27,14 @@ export class OrganizationsService {
         return this.http.get<PaginatedResults<Organization>>(`${this.baseApiUrl}${port}/api/${this.context}`)
       })
     )
+  }
 
+  protected emptyIndexResponse(): PaginatedResults<Organization> {
+    return {
+      results: [],
+      perPage: 20,
+      page: 0,
+      total: 0
+    }
   }
 }

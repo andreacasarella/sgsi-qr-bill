@@ -54,8 +54,9 @@ export interface Debtor extends Omit<Client, 'createdAt' | 'updatedAt'> {
 
 export interface Address {
   id?: number;
+  careOf?: string;
   street: string;           /* maxLength 70 */
-  buildingNumber: string;   /* maxLength 16 */
+  buildingNumber?: string;   /* maxLength 16 */
   zip: string;              /* maxLength 16 */
   city: string;             /* maxLength 35 */
   country: string;          /* ISO 2 CODE */

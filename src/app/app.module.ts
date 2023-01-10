@@ -17,11 +17,16 @@ import {getAuth, provideAuth} from "@angular/fire/auth";
 import {getStorage, provideStorage} from "@angular/fire/storage";
 import {TitleStrategy} from "@angular/router";
 import {I18nPageTitleStrategy} from "./@core/i18n/i18n-page-title-strategy";
+import {I18nCountriesService} from "./@core/i18n/i18n-countries.service";
 
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function setUpI18nCountries(service: I18nCountriesService) {
+  return () => service.use(['it']);
 }
 
 registerLocaleData(localeItCH);
@@ -54,6 +59,12 @@ registerLocaleData(localeItCH);
       provide: APP_INITIALIZER,
       useFactory: i18nAppInitializer,
       deps: [Injector],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setUpI18nCountries,
+      deps: [I18nCountriesService],
       multi: true
     },
     {provide: TitleStrategy, useClass: I18nPageTitleStrategy},

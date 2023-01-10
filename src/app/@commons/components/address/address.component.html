@@ -1,0 +1,8 @@
+<ng-container *ngIf="address">
+  <address class="d-flex flex-column">
+    <span>{{ address.street }} {{address.buildingNumber}}</span>
+    <span>{{ address.careOf }}</span>
+    <span>{{ address.zip }} {{address.city}}</span>
+    <span>{{ address.country | country }}</span>
+  </address>
+</ng-container>
